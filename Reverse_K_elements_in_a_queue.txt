@@ -1,0 +1,74 @@
+1) Method 1
+int top=-1;
+void push(int x,int stack[],int size){
+    if(top==-1){
+        top++;
+        stack[top]=x;
+    }
+    else if(top==size-1){
+        printf("Stack Overflow");    
+    }
+    else{
+        top++;
+        stack[top]=x;
+    }
+}
+int pop(int stack[]){
+    if(top==-1){
+        printf("Stack underflow");
+    }
+    else{
+        int item=stack[top];
+        top=top-1;
+        return item;
+    }
+}
+struct Queue *modifyQueue(struct Queue *queue, int n, int k) {
+    int stack[k];
+    int size=k;
+    int k1=k;
+    int remain=n-k;
+    while(k>0){
+        int item=front(queue);
+        dequeue(queue);
+        push(item,stack,size);
+        k-=1;
+    }
+    while(top!=-1){
+        int item=pop(stack);
+        enqueue(queue,item);
+    }
+    while(remain>0){
+        int item=front(queue);
+        dequeue(queue);
+        enqueue(queue,item);
+        remain-=1;
+    }
+    return queue;
+}
+
+
+2) Method 2(using STL)
+queue<int> modifyQueue(queue<int> q, int k) {
+    int x=k;
+    int y=q.size()-k;
+    stack<int> st;
+    while(x>0){
+        int item=q.front();
+        q.pop();
+        st.push(item);
+        x-=1;
+    }
+    while(!st.empty()){
+        int item=st.top();
+        st.pop();
+        q.push(item);
+    }
+    while(y>0){
+        int item=q.front();
+        q.pop();
+        q.push(item);
+        y-=1;
+    }
+    return q;
+}
